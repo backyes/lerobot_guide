@@ -1,0 +1,5 @@
+# Python 依赖
+pyserial>=3.5
+
+# 可选（LeRobot 开发）
+# lerobot>=2.0
