@@ -42,6 +42,8 @@ class FTServo:
     REG_MOVING = 66
     REG_POS_OFFSET_L = 31
 
+    REG_GOAL_SPEED_L = 46
+
     def __init__(self, port: str, baud: int = 1000000, timeout: float = 0.3):
         self.port = port
         self.baud = baud
@@ -127,6 +129,18 @@ class FTServo:
 
     def scan(self, max_id: int = 253, verbose: bool = False) -> List[int]:
         return [i for i in range(max_id + 1) if self.ping(i, verbose=verbose)]
+
+    def set_position(self, id: int, pos: int, speed: int = 0, acc: int = 0):
+        self.write_byte(id, self.REG_TORQUE_ENABLE, 1)
+        self.write_byte(id, 41, acc)
+        self.write_word(id, self.REG_GOAL_POS_L, pos)
+        self.write_word(id, self.REG_GOAL_SPEED_L, speed)
+
+    def lock_eprom(self, id: int):
+        self.write_byte(id, self.REG_LOCK, 1)
+
+    def unlock_eprom(self, id: int):
+        self.write_byte(id, self.REG_LOCK, 0)
 
     def close(self):
         if self.ser.is_open:
@@ -259,6 +273,13 @@ def main():
     mon_p.add_argument('--baud', type=int, default=1000000)
     mon_p.add_argument('--interval', type=float, default=0.1)
 
+    # move
+    mv_p = sub.add_parser('move', help='移动到目标位置')
+    mv_p.add_argument('--port', required=True)
+    mv_p.add_argument('--id', type=int, required=True)
+    mv_p.add_argument('--pos', type=int, required=True, help='目标位置 (0-4095)')
+    mv_p.add_argument('--baud', type=int, default=1000000)
+
     args = parser.parse_args()
     if not args.command:
         parser.print_help()
@@ -329,6 +350,12 @@ def main():
                     time.sleep(args.interval)
             except KeyboardInterrupt:
                 console.print("\n[yellow]停止[/yellow]")
+
+        elif args.command == 'move':
+            show_banner(f"🔄 移动到位置 {args.pos}", "cyan")
+            servo.set_position(args.id, args.pos)
+            time.sleep(0.5)
+            show_servo_status(args.id, servo.get_all_status(args.id), f"目标={args.pos}")
 
 
 if __name__ == '__main__':
