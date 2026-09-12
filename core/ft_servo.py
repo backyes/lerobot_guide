@@ -12,7 +12,7 @@ import argparse
 import sys
 from typing import List, Tuple, Optional, Dict, Any
 
-from display import (
+from .display import (
     FTSCSParser, CalibrationResult,
     show_port_info, show_servo_status, show_frame,
     show_scan_result, show_step, show_step_log,
