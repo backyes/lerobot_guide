@@ -78,10 +78,10 @@ AI:  position=2048, speed=0, temp=27°C, voltage=5.3V, torque=on
 
 | Task | Command |
 |------|---------|
-| Scan bus | `python scan.py --port /dev/cu.usbmodemXXXX` |
-| Calibrate | `python calibrate.py --port ... --id N` |
-| Change ID | `python set_id.py --port ... --old 1 --new 2` |
-| Monitor | `python monitor.py --port ... --id N` |
+| Scan bus | `python ft_servo.py scan --port /dev/cu.usbmodemXXXX` |
+| Calibrate | `python ft_servo.py calibrate --port ... --id N` |
+| Change ID | `python ft_servo.py set-id --port ... --old 1 --new 2` |
+| Monitor | `python ft_servo.py monitor --port ... --id N` |
 | Status | `python ft_servo.py status --port ... --id N` |
 
 ## Lessons from Real Debugging

@@ -28,33 +28,30 @@ pip install pyserial
 ### 1. 扫描舵机
 
 ```bash
-python scan.py --port /dev/cu.usbmodem5B790502931
+python ft_servo.py scan --port /dev/cu.usbmodem5B790502931
 ```
 
 ### 2. 一键校准
 
 ```bash
-python calibrate.py --port /dev/cu.usbmodem5B790502931 --id 1
+python ft_servo.py calibrate --port /dev/cu.usbmodem5B790502931 --id 1
 ```
 
 ### 3. 串接第二台：改 ID 再校准
 
 ```bash
-python set_id.py --port /dev/cu.usbmodem5B790502931 --old 1 --new 2
-python calibrate.py --port /dev/cu.usbmodem5B790502931 --id 2
+python ft_servo.py set-id --port /dev/cu.usbmodem5B790502931 --old 1 --new 2
+python ft_servo.py calibrate --port /dev/cu.usbmodem5B790502931 --id 2
 ```
 
 ## 文件结构
 
 ```
 lerobot_guide/
-├── ft_servo.py        # 核心库
-├── scan.py            # 扫描工具
-├── calibrate.py       # 校准脚本
-├── set_id.py          # 修改 ID
-├── monitor.py         # 实时监控
+├── ft_servo.py        # 核心库 + 统一 CLI
 ├── memory_table.md    # 内存表参考
 ├── LEROBOT_GUIDE.md   # LeRobot 集成指南
+├── AI_DEBUG_SKILL.md  # AI 调试经验沉淀
 └── README.md
 ```
 
