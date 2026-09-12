@@ -1,0 +1,16 @@
+[project]
+name = "lerobot_guide"
+version = "0.1.0"
+description = "FT servo debug toolkit for LeRobot"
+requires-python = ">=3.8"
+dependencies = [
+    "pyserial>=3.5",
+    "rich>=13.0",
+]
+
+[build-system]
+requires = ["setuptools>=68.0"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+include = ["core*"]
