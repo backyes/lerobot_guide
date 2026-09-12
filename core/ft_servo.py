@@ -233,6 +233,7 @@ def main():
     scan_p = sub.add_parser('scan', help='扫描舵机')
     scan_p.add_argument('--port')
     scan_p.add_argument('--baud', type=int, default=1000000)
+    scan_p.add_argument('--frames', action='store_true', help='显示响应帧')
 
     cal_p = sub.add_parser('calibrate', help='系统化校准')
     cal_p.add_argument('--port', required=True)
@@ -276,7 +277,7 @@ def main():
             show_banner('🔍 扫描舵机', 'cyan')
             found = []
             for i in range(254):
-                if servo.ping(i, verbose=verbose):
+                if servo.ping(i, verbose=args.frames):
                     found.append(i)
                     model = servo.read_word(i, 3)
                     pos = servo.get_position(i)
